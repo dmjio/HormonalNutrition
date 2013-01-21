@@ -11,7 +11,6 @@ from flask import Flask, render_template, request, redirect, url_for
 
 app = Flask(__name__)
 
-app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'this_should_be_configured')
 
 
 ###
@@ -57,6 +56,7 @@ def page_not_found(error):
     """Custom 404 page."""
     return render_template('404.html'), 404
 
-
 if __name__ == '__main__':
-    app.run(debug=True)
+    port = int(os.environ.get("PORT",5000))
+    app.run(host='0.0.0.0', port=port)
+
