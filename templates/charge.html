@@ -1,4 +1,28 @@
-{% extends "layout.html" %}
-{% block content %}
-  <h2>Thanks, you payed <strong>$5.00</strong>!</h2>
+{% extends "base.html" %}
+
+{% block title %}Purchase Complete!{% endblock %}
+
+{% block css %}
+<style type="text/css">
+  body{
+    padding-top: 40px;
+  }
+  h1, p{
+    text-align:center;
+  }
+  h1{
+    font-size:64px;
+    margin:75px 0 50px;
+  }
+  p{
+    font-size:24px;
+    margin:15px 0;
+  }
+</style>
+{% endblock %}
+
+{% block main %}
+<h1>Thank you!</h1>
+<p>You will receive an email shortly with download instructions.</p>
+<p><a href="{{ url_for('index') }}">go back home</a></p>
 {% endblock %}
