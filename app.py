@@ -17,9 +17,12 @@ mail = Mail(app)
 
 #sending mail
 def sendmail(title, fr, to, body):
+    print "sending email"
     msg = Message(title,sender=fr,recipients=[to])
+    print "creating msg"
     msg.body = body
-    mail.send(msg)
+    print "adding body"
+    return mail.send(msng)
 
 @app.route('/about')
 def about():
@@ -46,11 +49,12 @@ def charge():
         description='Hormonal Nutrition eBook Purchase'
     )
 
-    send_mail('Receipt from HormonalNutrition.com',
+    sendmail('Receipt from HormonalNutrition.com',
               'postmaster@hormonalnutrition.mailgun.org', 
               'djohnson.m@gmail.com', 
               'Thank you!')
 
+    print "sent message"
 
     return render_template('charge.html', amount=amount)
 
