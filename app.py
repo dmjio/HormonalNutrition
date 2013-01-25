@@ -12,8 +12,9 @@ stripe_keys = {
 stripe.api_key = stripe_keys['secret_key']
 
 app = Flask(__name__)
-heroku = Heroku(app)
 mail = Mail(app)
+heroku = Heroku(app)
+
 
 #sending mail
 def sendmail(title, fr, to, body):
