@@ -19,6 +19,7 @@ heroku = Heroku(app)
 #sending mail
 def sendmail(title, fr, to, body):
     print "sending email"
+    print app.config, "appconfig"
     msg = Message(title,sender=fr,recipients=[to])
     print "creating msg"
     msg.body = body
