@@ -1,6 +1,9 @@
 Flask==0.9
+Flask-Mail==0.7.4
 Jinja2==2.6
 Werkzeug==0.8.3
+blinker==1.2
+flask-heroku==0.1.4
 gevent==0.13.8
 greenlet==0.4.0
 gunicorn==0.17.2

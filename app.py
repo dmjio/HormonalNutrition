@@ -1,5 +1,7 @@
 import os
 from flask import Flask, render_template, request, url_for
+from flask.ext.heroku import Heroku
+from flask.ext.mail import Mail, Message
 import stripe
 
 stripe_keys = {
@@ -10,6 +12,14 @@ stripe_keys = {
 stripe.api_key = stripe_keys['secret_key']
 
 app = Flask(__name__)
+heroku = Heroku(app)
+mail = Mail(app)
+
+#sending mail
+def sendmail(title, fr, to, body):
+    msg = Message(title,sender=fr,recipients=[to])
+    msg.body = body
+    mail.send(msg)
 
 @app.route('/about')
 def about():
@@ -35,6 +45,12 @@ def charge():
         currency='usd',
         description='Hormonal Nutrition eBook Purchase'
     )
+
+    send_mail('Receipt from HormonalNutrition.com',
+              'postmaster@hormonalnutrition.mailgun.org', 
+              'djohnson.m@gmail.com', 
+              'Thank you!')
+
 
     return render_template('charge.html', amount=amount)
 
