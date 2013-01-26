@@ -1,7 +1,7 @@
 import os
 from flask import Flask, render_template, request, url_for
 from flask.ext.heroku import Heroku
-from flask.ext.mail import Mail, Message
+from smtplib import SMTP
 import stripe
 
 stripe_keys = {
@@ -12,19 +12,15 @@ stripe_keys = {
 stripe.api_key = stripe_keys['secret_key']
 
 app = Flask(__name__)
-mail = Mail(app)
 heroku = Heroku(app)
 
 
 #sending mail
-def sendmail(title, fr, to, body):
-    print "sending email"
-    print app.config, "appconfig"
-    msg = Message(title,sender=fr,recipients=[to])
-    print "creating msg"
-    msg.body = body
-    print "adding body"
-    return mail.send(msng)
+def send_email(msg,email):
+    smtp = SMTP(app.config['MAILGUN_SMTP_SERVER'], app.config['MAILGUN_SMTP_PORT'])
+    smtp.login(app.config['MAILGUN_SMTP_LOGIN'], app.config['MAILGUN_SMTP_PASSWORD'])
+    smtp.sendmail("postmaster@hormonalnutrition.mailgun.org", email, msg)
+    smtp.quit()
 
 @app.route('/about')
 def about():
@@ -51,10 +47,7 @@ def charge():
         description='Hormonal Nutrition eBook Purchase'
     )
 
-    sendmail('Receipt from HormonalNutrition.com',
-              'postmaster@hormonalnutrition.mailgun.org', 
-              'djohnson.m@gmail.com', 
-              'Thank you!')
+    send_email("thanks!","djohnson.m@gmail.com"):
 
     print "sent message"
 

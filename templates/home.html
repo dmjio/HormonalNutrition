@@ -97,7 +97,8 @@
 <div class="container-narrow">
       <div class="masthead">
         <ul class="nav nav-pills pull-right">
-          <li class="active"><a href="#">Home</a></li>
+          <li class="active"><a href="{{ url_for('index') }}">Home</a></li>
+          <li ><a href="{{ url_for('about') }}">About</a></li>
           <li><a href="http://blog.hormonalnutrition.com">Blog</a></li>
         </ul>
         <h3 class="muted"><span><img class="pic" src="https://dl.dropbox.com/u/10021156/HormonalNutrition/noun_project_4215.svg" /></span>Hormonal Nutrition</h3>
@@ -123,20 +124,33 @@
 
       <div class="row-fluid marketing">
         <div class="span6">
-          <h4>John Doe (Chief Fitness Expert)</h4>
-          <p>The best ebook I've ever read.</p>
+          <h4></h4>
+          <p></p>
+          <blockquote>
+  <p>Simply the best ebook I've ever read.</p>
+  <small>John Doe (Chief Fitness Expert) <cite title="Source Title"></cite></small>
+</blockquote>
 
-          <h4>Larry Looper (Fitness LLC)</h4>
-          <p>Awesome to hear an authority speak on the subject.</p>
+ <blockquote>
+  <p>Awesome to hear an authority speak on the subject.</p>
+  <small>Larry Looper (Fitness LLC) <cite title="Source Title"></cite></small>
+</blockquote>
+
         </div>
 
         <div class="span6">
-          <h4>Marry Sue (CEO)</h4>
-          <p>With all the misinformation out there its refreshing to hear the truth being preached.</p>
         
 
-          <h4>Samuel Sok (Health Coach)</h4>
-          <p>Bought 4 for family and friends.</p>
+           <blockquote>
+  <p>With all the misinformation out there its refreshing to hear the truth being preached.</p>
+  <small>Marry Sue (CEO) <cite title="Source Title"></cite></small>
+</blockquote>
+
+ <blockquote>
+  <p>Bought 4 for family and friends.</p>
+  <small>Samuel Sok (Health Coach) <cite title="Source Title"></cite></small>
+</blockquote>
+
 
         </div>
       </div>

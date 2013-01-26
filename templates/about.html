@@ -37,6 +37,10 @@
       .marketing p + h4 {
         margin-top: 28px;
       }
+      .small {
+        height : 100px;
+        width: 100px;
+      }
     </style>
 {% endblock %}
 
@@ -46,8 +50,9 @@
 
       <div class="masthead">
         <ul class="nav nav-pills pull-right">
-          <li class="active"><a href="#">Home</a></li>
-          <li><a href="blog.hormonalnutrition.com">Blog</a></li>
+          <li ><a href="{{ url_for('index') }}">Home</a></li>
+          <li class="active"><a href="{{ url_for('about') }}">About</a></li>
+          <li><a href="http://blog.hormonalnutrition.com">Blog</a></li>
         </ul>
         <h3 class="muted">Hormonal Nutrition</h3>
       </div>
@@ -55,43 +60,9 @@
       <hr>
 
       <div class="jumbotron">
-        <h1>About Us</h1>
+        <img src="https://dl.dropbox.com/u/10021156/HormonalNutrition/octobiwan.jpg" class="img-circle small">
         <p class="lead">Hormonal Nutrition was developed by Kevin Kuhn</p>
-         <form action="/charge" method="post">
-   
-
-    <script src="https://checkout.stripe.com/v2/checkout.js"
-    class="stripe-button"
-            data-key="{{ key }}"
-            data-description="A Flask Charge"
-            data-amount="500"></script>
-  </form>
-      </div>
-
-      <hr>
-
-      <div class="row-fluid marketing">
-        <div class="span6">
-          <h4>Subheading</h4>
-          <p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
-
-          <h4>Subheading</h4>
-          <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
-
-          <h4>Subheading</h4>
-          <p>Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
-        </div>
-
-        <div class="span6">
-          <h4>Subheading</h4>
-          <p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
-
-          <h4>Subheading</h4>
-          <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
-
-          <h4>Subheading</h4>
-          <p>Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
-        </div>
+        
       </div>
 
       <hr>
