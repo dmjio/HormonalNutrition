@@ -17,15 +17,9 @@ heroku = Heroku(app)
 
 #sending mail
 def send_email(msg,email):
-    print app.config['MAILGUN_SMTP_SERVER']
-    print app.config['MAILGUN_SMTP_PORT']
-    print app.config['MAILGUN_SMTP_LOGIN']
-    print app.config['MAILGUN_SMTP_PASSWORD']
-    print app.config['MAILGUN_SMTP_LOGIN']
-
-    smtp = SMTP(app.config['MAILGUN_SMTP_SERVER'], app.config['MAILGUN_SMTP_PORT'])
-    smtp.login(app.config['MAILGUN_SMTP_LOGIN'], app.config['MAILGUN_SMTP_PASSWORD'])
-    smtp.sendmail(app.config['MAILGUN_SMTP_LOGIN'], email, msg)
+    smtp = SMTP(os.environ['MAILGUN_SMTP_SERVER'], os.environ['MAILGUN_SMTP_PORT'])
+    smtp.login(os.environ['MAILGUN_SMTP_LOGIN'], os.environ['MAILGUN_SMTP_PASSWORD'])
+    smtp.sendmail(os.environ['MAILGUN_SMTP_LOGIN'], email, msg)
     smtp.quit()
 
 @app.route('/about')
