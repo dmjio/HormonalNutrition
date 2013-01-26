@@ -47,7 +47,7 @@ def charge():
         description='Hormonal Nutrition eBook Purchase'
     )
 
-    send_email("thanks!","djohnson.m@gmail.com"):
+    send_email("thanks!","djohnson.m@gmail.com")
 
     print "sent message"
 
