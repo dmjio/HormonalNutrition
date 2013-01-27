@@ -29,7 +29,7 @@ def about():
 def index():
     return render_template('home.html', key=stripe_keys['publishable_key'])
 
-@app.route('/lec')
+@app.route('/download/<email>')
 def send_pdf(email):
     """Send your static text file."""
     print email + " downloading ebook"
@@ -41,7 +41,7 @@ def charge():
     amount = 2500
 
     customer = stripe.Customer.create(
-        email='customer@example.com',
+        email=request.form['email'],
         card=request.form['stripeToken']
     )
 
@@ -52,7 +52,7 @@ def charge():
         description='Hormonal Nutrition eBook Purchase'
     )
 
-    send_email("Thanks! You have 3 attempts to download your ebook. " + url_for('send_pdf', email=request.form['email']), request.form['email'])
+    send_email("Thanks! You have 3 attempts to download your ebook. " + url_for('send_pdf', email=request.form['email'], _external=True), request.form['email'])
 
     return render_template('charge.html', amount=amount)
 
