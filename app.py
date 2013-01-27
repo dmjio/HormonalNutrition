@@ -14,7 +14,6 @@ stripe.api_key = stripe_keys['secret_key']
 app = Flask(__name__)
 heroku = Heroku(app)
 
-
 #sending mail
 def send_email(msg,email):
     smtp = SMTP(os.environ['MAILGUN_SMTP_SERVER'], os.environ['MAILGUN_SMTP_PORT'])
@@ -29,6 +28,12 @@ def about():
 @app.route('/')
 def index():
     return render_template('home.html', key=stripe_keys['publishable_key'])
+
+@app.route('/lec')
+def send_pdf(email):
+    """Send your static text file."""
+    print email + " downloading ebook"
+    return app.send_static_file('lec.pdf')    
 
 @app.route('/charge', methods=['POST'])
 def charge():
@@ -47,9 +52,7 @@ def charge():
         description='Hormonal Nutrition eBook Purchase'
     )
 
-    send_email("thanks!","djohnson.m@gmail.com")
-
-    print "sent message"
+    send_email("Thanks! You have 3 attempts to download your ebook. " + url_for('send_pdf', email=request.form['email']), request.form['email'])
 
     return render_template('charge.html', amount=amount)
 

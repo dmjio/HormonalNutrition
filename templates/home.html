@@ -92,6 +92,26 @@
     </style>
 {% endblock %}
 
+{%block js%}
+
+<script>
+function isValidEmail($email){
+    return eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$", 
+      $email);
+};
+
+$(document).ready(function(){
+
+  var $email = $('#email');
+  
+
+});
+
+
+</script>
+
+{% endblock %}
+
 {% block main %}
 
 <div class="container-narrow">
@@ -110,8 +130,8 @@
         <h1>Hormonal Nutrition</h1>
         <p class="lead">Eat the right things to elicit a hormonal response to get the results you want!</p>
          <form action="/charge" method="post">
-   
-
+          <input name="email" id="email" type="text" placeholder="Enter email here…">
+          <br />
     <script src="https://checkout.stripe.com/v2/checkout.js"
     class="stripe-button"
             data-key="{{ key }}"
