@@ -2,6 +2,7 @@ import os
 from flask import Flask, render_template, request, url_for
 from flask.ext.heroku import Heroku
 from smtplib import SMTP
+from flask.ext.sqlalchemy import SQLAlchemy
 import stripe
 
 stripe_keys = {
@@ -13,6 +14,7 @@ stripe.api_key = stripe_keys['secret_key']
 
 app = Flask(__name__)
 heroku = Heroku(app)
+db = SQLAlchemy(app)
 
 #sending mail
 def send_email(msg,email):
