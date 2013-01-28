@@ -16,6 +16,18 @@ app = Flask(__name__)
 heroku = Heroku(app)
 db = SQLAlchemy(app)
 
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(80))
+    email = db.Column(db.String(120), unique=True)
+
+    def __init__(self, name, email):
+        self.name = name
+        self.email = email
+
+    def __repr__(self):
+        return '<Name %r>' % self.name
+
 #sending mail
 def send_email(msg,email):
     smtp = SMTP(os.environ['MAILGUN_SMTP_SERVER'], os.environ['MAILGUN_SMTP_PORT'])
@@ -24,12 +36,10 @@ def send_email(msg,email):
     smtp.quit()
 
 @app.route('/about')
-def about():
-    return render_template('about.html')
+def about(): return render_template('about.html')
 
 @app.route('/')
-def index():
-    return render_template('home.html', key=stripe_keys['publishable_key'])
+def index(): return render_template('home.html', key=stripe_keys['publishable_key'])
 
 @app.route('/download/<email>')
 def send_pdf(email):
@@ -41,6 +51,10 @@ def send_pdf(email):
 def charge():
     # Amount in cents
     amount = 2500
+
+    user = User('user',request.form['email'])
+    db.session.add(user)
+    db.session.commit()
 
     customer = stripe.Customer.create(
         email=request.form['email'],
