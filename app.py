@@ -52,10 +52,6 @@ def charge():
     # Amount in cents
     amount = 2500
 
-    user = User('user',request.form['email'])
-    db.session.add(user)
-    db.session.commit()
-
     customer = stripe.Customer.create(
         email=request.form['email'],
         card=request.form['stripeToken']
