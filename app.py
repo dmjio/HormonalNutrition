@@ -63,7 +63,7 @@ def charge():
     customer.save()
     
 
-    send_email("Thanks! You have 3 attempts to download your ebook. " + url_for('send_pdf', email=(request.form['email'].replace('%40','@')), _external=True), request.form['email'])
+    send_email("Thanks! You have 3 attempts to download your ebook. " + url_for('send_pdf', email=request.form['email'].replace('%40','@'), _external=True), request.form['email'])
 
     return render_template('charge.html', amount=amount)
 
