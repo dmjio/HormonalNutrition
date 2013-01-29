@@ -2,6 +2,7 @@ import os
 from flask import Flask, render_template, request, url_for
 from flask.ext.heroku import Heroku
 from smtplib import SMTP
+from flask.ext.mongoengine import MongoEngine
 import stripe
 
 stripe_keys = {
@@ -12,7 +13,9 @@ stripe_keys = {
 stripe.api_key = stripe_keys['secret_key']
 
 app = Flask(__name__)
+app.config["MONGODB_SETTINGS"] = {'DB': "hormonalDB"}
 heroku = Heroku(app)
+db = MongoEngine(app)
 
 #sending mail
 def send_email(msg,email):
