@@ -19,7 +19,7 @@ app.config["MONGODB_USERNAME"] = app.config['MONGODB_USER']
 db = MongoEngine(app)
 
 class Customers(db.Document):
-    created_at = db.DateTimeField(default=datetime.now, required=True)
+    created_at = db.DateTimeField(default=datetime.now(), required=True)
     email = db.StringField(max_length=255, required=True)
     downloads = db.IntField()
 
@@ -76,7 +76,7 @@ def charge():
     )
     print "finished stripe"
     #mongo goes here...
-    customer = Customers(created_at=datetime.now,email=request.form['email'],downloads=3)
+    customer = Customers(created_at=datetime.now(),email=request.form['email'],downloads=3)
     customer.save()
     print "finished mongo"
 
