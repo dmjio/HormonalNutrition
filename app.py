@@ -68,8 +68,11 @@ def charge():
     # Amount in cents
     amount = 2500
 
+    emailaddr = request.form['email']
+    emailaddr = email.replace('%40','@')
+
     customer = stripe.Customer.create(
-        email=request.form['email'],
+        email=emailaddr,
         card=request.form['stripeToken']
     )
 
@@ -81,11 +84,10 @@ def charge():
     )
 
     #mongo goes here...
-    customer = Customers(created_at=datetime.now,email=request.form['email'],downloads=3)
+    customer = Customers(created_at=datetime.now,email=emailaddr,downloads=3)
     customer.save()
-    
 
-    send_email("Thanks! You have 3 attempts to download your ebook. " + url_for('send_pdf', email=(request.form['email'].replace('%40','@')), _external=True), request.form['email'])
+    send_email("Thanks! You have 3 attempts to download your ebook. " + url_for('send_pdf', email=emailaddr, _external=True), emailaddr)
 
     return render_template('charge.html', amount=amount)
 
