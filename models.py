@@ -2,20 +2,20 @@ import datetime
 from flask import url_for
 from app import db
 
-class Customers(db.Documentb):
+class Customers(db.Document):
     created_at = db.DateTimeField(default=datetime.datetime.now, required=True)
     email = db.StringField(max_length=255, required=True)
     downloads = db.IntField()
 
     def get_absolute_url(self):
-        return url_for('post', kwargs={"slug": self.slug})
+        return url_for('customer', kwargs={"created_at": self.created_at})
 
     def __unicode__(self):
-        return self.title
+        return self.email
 
     meta = {
         'allow_inheritance': True,
-        'indexes': ['-created_at', 'slug'],
+        'indexes': ['-created_at'],
         'ordering': ['-created_at']
     }
     
