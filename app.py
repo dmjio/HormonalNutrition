@@ -34,14 +34,12 @@ def index(): return render_template('home.html', key=stripe_keys['publishable_ke
 @app.route('/download/<email>')
 def send_pdf(email):
     """Send your static text file."""
-    print email + " downloading ebook"
     for c in Customers.objects:
-        print c.email, email
         if c.email == email and c.downloads > 0:
             c.downloads = c.downloads - 1
             c.save()
             return app.send_static_file('lec.pdf')  	
-    return render_template('templates/404.html')
+    return render_template('404.html')
 
 @app.route('/charge', methods=['POST'])
 def charge():
