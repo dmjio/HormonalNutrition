@@ -18,6 +18,9 @@ heroku = Heroku(app)
 app.config["MONGODB_USERNAME"] = app.config['MONGODB_USER']
 db = MongoEngine(app)
 
+if not 'Production' in os.environ:
+    app.debug = True
+
 class Customers(db.Document):
     created_at = db.DateTimeField(default=datetime.now(), required=True)
     email = db.StringField(max_length=255, required=True)
@@ -76,6 +79,7 @@ def charge():
         currency='usd',
         description='Hormonal Nutrition eBook Purchase'
     )
+
     #mongo goes here...
     customer = Customers(created_at=datetime.now(),email=request.form['email'],downloads=3)
     customer.save()
