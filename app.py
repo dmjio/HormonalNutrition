@@ -19,7 +19,7 @@ app.config["MONGODB_USERNAME"] = app.config['MONGODB_USER']
 db = MongoEngine(app)
 
 class Customers(db.Document):
-    created_at = db.DateTimeField(default=datetime.datetime.now, required=True)
+    created_at = db.DateTimeField(default=datetime.now, required=True)
     email = db.StringField(max_length=255, required=True)
     downloads = db.IntField()
 
