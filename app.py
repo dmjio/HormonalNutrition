@@ -56,7 +56,7 @@ def send_pdf(email):
             c.downloads = c.downloads - 1
             c.save()
             return app.send_static_file('lec.pdf')  	
-    return render_template('404.html')
+    return render_template('nomas.html')
 
 @app.route('/charge', methods=['POST'])
 def charge():
