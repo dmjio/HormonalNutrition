@@ -1,9 +1,10 @@
 import os
 from flask import Flask, render_template, request, url_for
 from flask.ext.heroku import Heroku
+from flask.ext.mongoengine import MongoEngine
 from smtplib import SMTP
 from datetime import datetime
-from flask.ext.mongoengine import MongoEngine
+from models import Customers
 import stripe
 
 stripe_keys = {
@@ -38,7 +39,7 @@ def send_pdf(email):
     for c in Customers.objects:
         print c.email, email
         if c.email == email and c.downloads > 0:
-            c.downloads = c.downloads - 1
+            c.downloads -= 1
             c.save()
             return app.send_static_file('lec.pdf')  	
     return render_template('404.html')
@@ -61,7 +62,7 @@ def charge():
     )
 
     #mongo goes here...
-    customer = Customers(created_at=datetime.now,email=request.form['email'],downloads=3)
+    customer = Customers(created_at=datetime.now(),email=request.form['email'],downloads=3)
     customer.save()
     
 
