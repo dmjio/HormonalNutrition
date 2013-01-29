@@ -2,7 +2,6 @@ import os
 from flask import Flask, render_template, request, url_for
 from flask.ext.heroku import Heroku
 from smtplib import SMTP
-from flask.ext.sqlalchemy import SQLAlchemy
 import stripe
 
 stripe_keys = {
@@ -14,19 +13,6 @@ stripe.api_key = stripe_keys['secret_key']
 
 app = Flask(__name__)
 heroku = Heroku(app)
-db = SQLAlchemy(app)
-
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(80))
-    email = db.Column(db.String(120), unique=True)
-
-    def __init__(self, name, email):
-        self.name = name
-        self.email = email
-
-    def __repr__(self):
-        return '<Name %r>' % self.name
 
 #sending mail
 def send_email(msg,email):
@@ -63,7 +49,7 @@ def charge():
         currency='usd',
         description='Hormonal Nutrition eBook Purchase'
     )
-
+    #mongo goes here...
     send_email("Thanks! You have 3 attempts to download your ebook. " + url_for('send_pdf', email=request.form['email'], _external=True), request.form['email'])
 
     return render_template('charge.html', amount=amount)
