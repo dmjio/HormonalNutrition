@@ -57,6 +57,7 @@ def send_pdf(email):
             print c.downloads
             c.downloads = c.downloads - 1
             c.save()
+            print "saved!"
             return app.send_static_file('lec.pdf')  	
     return render_template('nomas.html')
 
@@ -81,6 +82,21 @@ def charge():
 
     send_email("Thanks! You have 3 attempts to download your ebook. " + url_for('send_pdf', email=request.form['email'].replace('%40','@'), _external=True), request.form['email'])
     return render_template('charge.html', amount=amount)
+
+@app.after_request
+def add_header(response):
+    """
+    Add headers to both force latest IE rendering engine or Chrome Frame,
+    and also to cache the rendered page for 10 minutes.
+    """
+    response.headers['X-UA-Compatible'] = 'IE=Edge,chrome=1'
+    response.headers['Cache-Control'] = 'public, max-age=0'
+    return response
+
+@app.errorhandler(404)
+def page_not_found(error):
+    """Custom 404 page."""
+    return render_template('404.html'), 404    
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
