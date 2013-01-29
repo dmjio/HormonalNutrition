@@ -18,11 +18,6 @@ heroku = Heroku(app)
 app.config["MONGODB_USERNAME"] = app.config['MONGODB_USER']
 db = MongoEngine(app)
 
-#model
-import datetime
-from flask import url_for
-from app import db
-
 class Customers(db.Document):
     created_at = db.DateTimeField(default=datetime.datetime.now, required=True)
     email = db.StringField(max_length=255, required=True)
