@@ -4,6 +4,7 @@ from flask.ext.heroku import Heroku
 from smtplib import SMTP
 from datetime import datetime
 from flask.ext.mongoengine import MongoEngine
+#from flask.ext.mail import Mail, Message
 import stripe
 
 stripe_keys = {
@@ -14,6 +15,7 @@ stripe_keys = {
 stripe.api_key = stripe_keys['secret_key']
 
 app = Flask(__name__)
+#mail = Mail(app)
 heroku = Heroku(app)
 app.config["MONGODB_USERNAME"] = app.config['MONGODB_USER']
 db = MongoEngine(app)
@@ -83,6 +85,13 @@ def charge():
     #mongo goes here...
     customer = Customers(created_at=datetime.now(),email=request.form['email'],downloads=3)
     customer.save()
+    
+    #flask mail...
+    #msg = Message("Thank you for your purchase!",
+    #              sender=("Kevin Kuhn", 'postmaster@hormonalnutrition.com'),
+    #              recipients=request.form['email'])
+    #msg.html = "<h2>Thank you!</h2><p> You have 3 attempts to download your ebook.</p>" + "<p>" + url_for('send_pdf', email=request.form['email'], _external=True) + "</p>"
+    #mail.send(msg)
 
     send_email("Thanks! You have 3 attempts to download your ebook. " + url_for('send_pdf', email=request.form['email'].replace('%40','@'), _external=True), request.form['email'])
     return render_template('charge.html', amount=amount)
