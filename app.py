@@ -53,6 +53,8 @@ def send_pdf(email):
     """Send your static text file."""
     for c in Customers.objects:
         if c.email == email and c.downloads > 0:
+            print c.email
+            print c.downloads
             c.downloads = c.downloads - 1
             c.save()
             return app.send_static_file('lec.pdf')  	
@@ -62,7 +64,6 @@ def send_pdf(email):
 def charge():
     # Amount in cents
     amount = 2500
-    print "in charge"
     customer = stripe.Customer.create(
         email=request.form['email'],
         card=request.form['stripeToken']
@@ -74,14 +75,11 @@ def charge():
         currency='usd',
         description='Hormonal Nutrition eBook Purchase'
     )
-    print "finished stripe"
     #mongo goes here...
     customer = Customers(created_at=datetime.now(),email=request.form['email'],downloads=3)
     customer.save()
-    print "finished mongo"
 
     send_email("Thanks! You have 3 attempts to download your ebook. " + url_for('send_pdf', email=request.form['email'].replace('%40','@'), _external=True), request.form['email'])
-    print "finished email"
     return render_template('charge.html', amount=amount)
 
 if __name__ == '__main__':
