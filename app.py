@@ -64,7 +64,6 @@ def charge():
     amount = 2500
 
     emailaddr = request.form['email']
-    emailaddr = email.replace('%40','@')
 
     customer = stripe.Customer.create(
         email=emailaddr,
