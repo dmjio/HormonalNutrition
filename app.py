@@ -1,9 +1,9 @@
 import os
 from flask import Flask, render_template, request, url_for
 from flask.ext.heroku import Heroku
-from flask.ext.mongoengine import MongoEngine
 from smtplib import SMTP
 from datetime import datetime
+from flask.ext.mongoengine import MongoEngine
 import stripe
 
 stripe_keys = {
@@ -17,24 +17,6 @@ app = Flask(__name__)
 heroku = Heroku(app)
 app.config["MONGODB_USERNAME"] = app.config['MONGODB_USER']
 db = MongoEngine(app)
-
-#model
-class Customers(db.Document):
-    created_at = db.DateTimeField(default=datetime.now(), required=True)
-    email = db.StringField(max_length=255, required=True)
-    downloads = db.IntField()
-
-    def get_absolute_url(self):
-        return url_for('customer', kwargs={"created_at": self.created_at})
-
-    def __unicode__(self):
-        return self.email
-
-    meta = {
-        'allow_inheritance': True,
-        'indexes': ['-created_at'],
-        'ordering': ['-created_at']
-    }
 
 #sending mail
 def send_email(msg,email):
@@ -56,10 +38,10 @@ def send_pdf(email):
     for c in Customers.objects:
         print c.email, email
         if c.email == email and c.downloads > 0:
-            c.downloads -= 1
+            c.downloads = c.downloads - 1
             c.save()
             return app.send_static_file('lec.pdf')  	
-    return render_template('404.html')
+    return render_template('templates\404.html')
 
 @app.route('/charge', methods=['POST'])
 def charge():
@@ -79,11 +61,11 @@ def charge():
     )
 
     #mongo goes here...
-    customer = Customers(created_at=datetime.now(),email=request.form['email'],downloads=3)
+    customer = Customers(created_at=datetime.now,email=request.form['email'],downloads=3)
     customer.save()
     
 
-    send_email("Thanks! You have 3 attempts to download your ebook. " + url_for('send_pdf', email=request.form['email'], _external=True), request.form['email'])
+    send_email("Thanks! You have 3 attempts to download your ebook. " + url_for('send_pdf', _external=True) + request.form['email'], request.form['email'])
 
     return render_template('charge.html', amount=amount)
 
