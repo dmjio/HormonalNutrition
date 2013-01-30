@@ -1,0 +1,10 @@
+{exec} = require 'child_process'
+
+coffeeFiles = [
+    'app.coffee',
+]
+
+task 'build', 'Build PunchedOut! JavaScript file', ->
+    console.log 'Building PunchedOut! application.js file...'
+
+    exec "coffee --join app.js --output ../js/ --compile #{coffeeFiles.toString().replace(/,/g, ' ')}"
