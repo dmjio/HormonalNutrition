@@ -16,7 +16,6 @@ stripe_keys = {
 stripe.api_key = stripe_keys['secret_key']
 
 app = Flask(__name__)
-cake = Cake(app, ["build"]) #this converts our coffeescript to javascript
 #mail = Mail(app)
 heroku = Heroku(app)
 app.config["MONGODB_USERNAME"] = app.config['MONGODB_USER']
@@ -24,6 +23,8 @@ db = MongoEngine(app)
 
 if not 'Production' in os.environ:
     app.debug = True
+    cake = Cake(app, ["build"]) #this converts our coffeescript to javascript
+
 
 class Customers(db.Document):
     created_at = db.DateTimeField(default=datetime.now(), required=True)
