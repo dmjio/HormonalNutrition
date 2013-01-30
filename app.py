@@ -6,6 +6,7 @@ from datetime import datetime
 from flask.ext.mongoengine import MongoEngine
 #from flask.ext.mail import Mail, Message
 import stripe
+from flask_cake import Cake
 
 stripe_keys = {
     'secret_key': os.environ['SECRET_KEY'],
@@ -15,6 +16,7 @@ stripe_keys = {
 stripe.api_key = stripe_keys['secret_key']
 
 app = Flask(__name__)
+cake = Cake(app, ["build"]) #this converts our coffeescript to javascript
 #mail = Mail(app)
 heroku = Heroku(app)
 app.config["MONGODB_USERNAME"] = app.config['MONGODB_USER']
