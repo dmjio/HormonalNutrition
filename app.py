@@ -6,7 +6,6 @@ from datetime import datetime
 from flask.ext.mongoengine import MongoEngine
 #from flask.ext.mail import Mail, Message
 import stripe
-from flask_cake import Cake
 
 stripe_keys = {
     'secret_key': os.environ['SECRET_KEY'],
@@ -23,8 +22,10 @@ db = MongoEngine(app)
 
 if not 'Production' in os.environ:
     app.debug = True
+    from flask_cake import Cake
     cake = Cake(app, ["build"]) #this converts our coffeescript to javascript
-
+    from flask.ext.less import LESS    
+    less = LESS(app)
 
 class Customers(db.Document):
     created_at = db.DateTimeField(default=datetime.now(), required=True)
