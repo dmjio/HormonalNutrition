@@ -51,7 +51,7 @@ def send_email(msg,email):
     smtp.sendmail(os.environ['MAILGUN_SMTP_LOGIN'], email, msg)
     smtp.quit()
 
-@app.route('/about')
+@app.route('/about/')
 def about(): return render_template('about.html')
 
 @app.route('/')
@@ -70,7 +70,7 @@ def send_pdf(email):
             return app.send_static_file('lec.pdf')  	
     return render_template('nomas.html')
 
-@app.route('/charge', methods=['POST'])
+@app.route('/charge/', methods=['POST'])
 def charge():
     # Amount in cents
     amount = 2500

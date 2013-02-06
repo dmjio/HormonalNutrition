@@ -1,110 +1,22 @@
 {% extends "base.html" %}
 
-
 {% block css %}
-<style type="text/css">
-      body {
-        padding-top: 20px;
-        padding-bottom: 40px;
-      }
-
-      /* Custom container */
-      .container-narrow {
-        margin: 0 auto;
-        max-width: 700px;
-      }
-      .container-narrow > hr {
-        margin: 30px 0;
-      }
-
-      /* Main marketing message and sign up button */
-      .jumbotron {
-        margin: 60px 0;
-        text-align: center;
-      }
-      .jumbotron h1 {
-        font-size: 72px;
-        line-height: 1;
-      }
-      .jumbotron .btn {
-        font-size: 21px;
-        padding: 14px 24px;
-      }
-
-      /* Supporting marketing content */
-      .marketing {
-        margin: 60px 0;
-      }
-      .marketing p + h4 {
-        margin-top: 28px;
-      }
-
-      /* Featurettes
-    ------------------------- */
-
-    .featurette-divider {
-      margin: 80px 0; /* Space out the Bootstrap <hr> more */
-    }
-    .featurette {
-      padding-top: 120px; /* Vertically center images part 1: add padding above and below text. */
-      overflow: hidden; /* Vertically center images part 2: clear their floats. */
-    }
-    .featurette-image {
-      margin-top: -120px; /* Vertically center images part 3: negative margin up the image the same amount of the padding to center it. */
-    }
-
-    /* Give some space on the sides of the floated elements so text doesn't run right into it. */
-   
-
-    /* Thin out the marketing headings */
-    .featurette-heading {
-      font-size: 50px;
-      font-weight: 300;
-      line-height: 1;
-      letter-spacing: -1px;
-    }
-
-     @media (max-width: 979px) {
-
-      .featurette {
-        height: auto;
-        padding: 0;
-      }
-
-    }
-
-
-    @media (max-width: 767px) {
-
-   
-      .featurette-heading {
-        font-size: 30px;
-      }
-      .featurette .lead {
-        font-size: 18px;
-        line-height: 1.5;
-      }
-
-    }
-    </style>
+<link href="http://fonts.googleapis.com/css?family=Open+Sans:regular,semibold,italic,italicsemibold|PT+Sans:400,700,400italic,700italic|PT+Serif:400,700,400italic,700italic" rel="stylesheet" />
+<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" type="text/css" />
 {% endblock %}
 
-{%block js%}
-
+{% block js%}
 <script type=text/javascript src="{{ url_for('static', filename='js/app.js') }}"></script>
-
 {% endblock %}
 
 {% block main %}
-
 <div class="container-narrow">
       <div class="masthead">
         <ul class="nav nav-pills pull-right">
           <li class="active"><a href="{{ url_for('index') }}">Home</a></li>
           <li ><a href="{{ url_for('about') }}">About</a></li>
-          <li><a href="http://blog.hormonalnutrition.com">Blog</a></li>
         </ul>
-        <h3 class="muted"><span><img class="pic" src="https://dl.dropbox.com/u/10021156/HormonalNutrition/noun_project_7789.svg" /></span></h3>
+        <h3 class="muted"><span><img class="pic" width="80" height="80" src="https://dl.dropbox.com/u/10021156/HormonalNutrition/noun_project_7789.svg" /></span></h3>
       </div>
       <hr>
       <div class="jumbotron">
@@ -114,77 +26,39 @@
           <input name="email" id="email" type="text" placeholder="Enter email here…">
           <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://hormonalnutrition.com" data-size="large" data-hashtags="hormonalnutrition"></a>
           <br />
-    <script src="https://checkout.stripe.com/v2/checkout.js"
-    class="stripe-button"
-            data-key="{{ key }}"
-            data-description="Checkout for HormonalNutrition.com"
-            data-amount="2500"></script>
-  </form>
+          <script src="https://checkout.stripe.com/v2/checkout.js"
+                  class="stripe-button"
+                  data-key="{{ key }}"
+                  data-description="Checkout for HormonalNutrition.com"
+                  data-amount="2500"></script>
+         </form>
       </div>
-
       <hr>
-
+      
       <div class="row-fluid marketing">
         <div class="span6">
-          <h4></h4>
-          <p></p>
           <blockquote>
-  <p>Simply the best ebook I've ever read.</p>
-  <small>John Doe (Chief Fitness Expert) <cite title="Source Title"></cite></small>
-</blockquote>
-
- <blockquote>
-  <p>Awesome to hear an authority speak on the subject.</p>
-  <small>Larry Looper (Fitness LLC) <cite title="Source Title"></cite></small>
-</blockquote>
-
-        </div>
-
-        <div class="span6">
+            <p>Simply the best ebook I've ever read.</p>
+            <small>John Doe (Chief Fitness Expert) <cite title="Source Title"></cite></small>
+          </blockquote>
+          
+          <blockquote>
+            <p>Awesome to hear an authority speak on the subject.</p>
+            <small>Larry Looper (Fitness LLC) <cite title="Source Title"></cite></small>
+          </blockquote>
+         </div>
         
-
+        <div class="span6">
            <blockquote>
-  <p>With all the misinformation out there its refreshing to hear the truth being preached.</p>
-  <small>Marry Sue (CEO) <cite title="Source Title"></cite></small>
-</blockquote>
-
- <blockquote>
-  <p>Bought 4 for family and friends.</p>
-  <small>Samuel Sok (Health Coach) <cite title="Source Title"></cite></small>
-</blockquote>
-
-
+             <p>With all the misinformation out there its refreshing to hear the truth being preached.</p>
+             <small>Marry Sue (CEO) <cite title="Source Title"></cite></small>
+           </blockquote>
+           <blockquote>
+             <p>Bought 4 for family and friends.</p>
+             <small>Samuel Sok (Health Coach) <cite title="Source Title"></cite></small>
+           </blockquote>
         </div>
       </div>
-
-
-
-    <hr class="featurette-divider">
-
-      <div class="featurette">
-        <img class="featurette-image center" src="https://dl.dropbox.com/u/10021156/HormonalNutrition/noun_project_618.svg">
-        <h2 class="featurette-heading">First featurette headling. <span class="muted">It'll blow your mind.</span></h2>
-        <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
-      </div>
-
-      <hr class="featurette-divider">
-
-      <div class="featurette">
-        <img class="featurette-image center" src="https://dl.dropbox.com/u/10021156/HormonalNutrition/noun_project_3746.svg">
-        <h2 class="featurette-heading">Oh yeah, it's that good. <span class="muted">See for yourself.</span></h2>
-        <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
-      </div>
-
-      <hr class="featurette-divider">
-
-      <div class="featurette">
-        <img class="featurette-image center" src="https://dl.dropbox.com/u/10021156/HormonalNutrition/noun_project_4394.svg">
-        <h2 class="featurette-heading">And lastly, this one. <span class="muted">Checkmate.</span></h2>
-        <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
-      </div>
-
-      <hr class="featurette-divider">
-
 
       <div class="footer">
         <p>&copy; HormonalNutrition.com 2013</p>
