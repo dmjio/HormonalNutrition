@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, request, url_for, jsonify
+from flask import Flask, render_template, request, url_for, jsonify, redirect
 from flask.ext.heroku import Heroku
 from smtplib import SMTP
 from datetime import datetime
@@ -68,6 +68,7 @@ def about():
 def checkout():
     print request.url, request, "ok"
     if 'Production' in os.environ and "https://hormonalnutrition.herokuapp.com/checkout/" != request.url:
+        print True
         request.url = "https://hormonalnutrition.herokuapp.com/checkout/"
         return redirect(request.url, 301)
     return render_template('checkout.html', key=stripe_keys['publishable_key'])
