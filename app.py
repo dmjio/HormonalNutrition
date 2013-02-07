@@ -67,8 +67,8 @@ def about():
 @app.route('/checkout/')
 def checkout():
     if 'Production' in os.environ:
-        if request.url.find("https://hormonalnutrition.herokuapp.com") == -1:
-                return redirect("https://hormonalnutrition.herokuapp.com")
+        print "in prod"
+        return redirect("https://hormonalnutrition.herokuapp.com")
     return render_template('checkout.html', key=stripe_keys['publishable_key'])
 
 @app.route('/')
