@@ -2,39 +2,42 @@
 
 {% block css %}
 <link href="http://fonts.googleapis.com/css?family=Open+Sans:regular,semibold,italic,italicsemibold|PT+Sans:400,700,400italic,700italic|PT+Serif:400,700,400italic,700italic" rel="stylesheet" />
-<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" type="text/css" />
-{% endblock %}
-
-{% block js%}
-<script type=text/javascript src="{{ url_for('static', filename='js/app.js') }}"></script>
 {% endblock %}
 
 {% block main %}
-<div class="container-narrow">
-      <div class="masthead">
-        <ul class="nav nav-pills pull-right">
+<div class="container ">
+  <h1 class="pull-right">Hormonal Nutrition</h1>
+        <ul class="nav nav-pills">
           <li class="active"><a href="{{ url_for('index') }}">Home</a></li>
+          <li ><a href="{{ url_for('checkout') }}">Checkout</a></li>
           <li ><a href="{{ url_for('about') }}">About</a></li>
         </ul>
-        <h3 class="muted"><span><img class="pic" width="80" height="80" src="https://dl.dropbox.com/u/10021156/HormonalNutrition/noun_project_7789.svg" /></span></h3>
-      </div>
       <hr>
-      <div class="jumbotron">
-        <h1>Hormonal Nutrition</h1>
-        <p class="lead">Eat the right things to elicit a hormonal response to get the results you want!</p>
-         <form action="/charge" method="post">
-          <input name="email" id="email" type="text" placeholder="Enter email here…">
-          <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://hormonalnutrition.com" data-size="large" data-hashtags="hormonalnutrition"></a>
-          <br />
-          <script src="https://checkout.stripe.com/v2/checkout.js"
-                  class="stripe-button"
-                  data-key="{{ key }}"
-                  data-description="Checkout for HormonalNutrition.com"
-                  data-amount="2500"></script>
-         </form>
-      </div>
+<div class="row-fluid">
+<div class="span3">
+        <h1 style="text-align:center">Learn the truth about your body</h1>
+        <p class="lead" style="text-align:center;">Hormones are
+        running your metabolism, so eat the right foods to elicit a
+        specific hormonal response.  Take <strong>control</strong> of your metabolism
+        and get the results you want!</p>
+</div>
+
+<div class="span4">
+  <p class="lead"><img src="https://dl.dropbox.com/u/10021156/HormonalNutrition/wbc.png" class="" alt="" /> </p>
+</div>
+
+<div class="span5" style="text-align:center">
+        <h1>Dr. Kevin Kuhn</h1>
+        <p class="lead" style="text-align:center;">Hormones are
+        running your metabolism, so eat the right foods to elicit a
+        specific hormonal response.  Take control of your metabolism
+        and get the results you want!</p>
+        <p italic class="lead">Get the book <strong>now</strong></p>
+        <a type="button" class="btn btn-warning" href="{{
+        url_for('checkout') }}">Buy Now! $25</a>
+</div>
+</div>
       <hr>
-      
       <div class="row-fluid marketing">
         <div class="span6">
           <blockquote>
@@ -58,7 +61,7 @@
              <small>Samuel Sok (Health Coach) <cite title="Source Title"></cite></small>
            </blockquote>
         </div>
-      </div>
+      </div> 
 
       <div class="footer">
         <p>&copy; HormonalNutrition.com 2013</p>

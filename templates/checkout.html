@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static',filename='css/main.css') }}" type="text/css" />
+{% endblock %}
+
+{% block js %}
+<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+{% endblock %}
+
+{% block main %}
+<div class="container">
+  <h1 class="pull-right">Hormonal Nutrition</h1>
+        <ul class="nav nav-pills">
+          <li ><a href="{{ url_for('index') }}">Home</a></li>
+          <li class="active" ><a href="{{ url_for('checkout') }}">Checkout</a></li>
+          <li ><a href="{{ url_for('about') }}">About</a></li>
+        </ul>
+      <hr>
+       
+
+<div class="row-fluid">
+  <div class="span12 pagination-centered jumbotron">
+        <h1>Checkout</h1>
+        <p class="lead" id="validation">Enter your email address to proceed to a
+        secure payment gateway</p>
+         <form action="{{ url_for('charge') }}" method="post">
+          <input name="email" id="email" type="email"
+        placeholder="Enter email here…">
+          <br />
+          <script src="https://checkout.stripe.com/v2/checkout.js"
+                  class="stripe-button"
+                  data-key="{{ key }}"
+                  data-description="Checkout for HormonalNutrition.com"
+                  data-amount="2500"></script>
+         </form>
+</div>
+</div>
+</div>
+</div>
+{% endblock %}

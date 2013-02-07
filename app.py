@@ -1,10 +1,10 @@
 import os
-from flask import Flask, render_template, request, url_for
+from flask import Flask, render_template, request, url_for, jsonify
 from flask.ext.heroku import Heroku
 from smtplib import SMTP
 from datetime import datetime
 from flask.ext.mongoengine import MongoEngine
-#from flask.ext.mail import Mail, Message
+from flask.ext.mail import Mail, Message
 import stripe
 
 stripe_keys = {
@@ -15,10 +15,15 @@ stripe_keys = {
 stripe.api_key = stripe_keys['secret_key']
 
 app = Flask(__name__)
-#mail = Mail(app)
+mail = Mail(app)
 heroku = Heroku(app)
-app.config["MONGODB_USERNAME"] = app.config['MONGODB_USER']
+app.config["MONGODB_USERNAME"] = app.config['MONGODB_USER'] #flask_heroku naming convention mismatch, with MongoEngine this time
 db = MongoEngine(app)
+
+#need to explicity define the mail gun smtp port since flask_heroku
+#leaves this out
+app.config["MAIL_PORT"] = os.environ["MAILGUN_SMTP_PORT"]
+app.config["MAIL_SERVER"] = app.config["SMTP_SERVER"]
 
 if not 'Production' in os.environ:
     app.debug = True
@@ -26,6 +31,8 @@ if not 'Production' in os.environ:
     cake = Cake(app, ["build"]) #this converts our coffeescript to javascript
     from flask.ext.less import LESS    
     less = LESS(app)
+else:
+    app.debug = False
 
 class Customers(db.Document):
     created_at = db.DateTimeField(default=datetime.now(), required=True)
@@ -44,29 +51,35 @@ class Customers(db.Document):
         'ordering': ['-created_at']
     }
 
-#sending mail
-def send_email(msg,email):
-    smtp = SMTP(os.environ['MAILGUN_SMTP_SERVER'], os.environ['MAILGUN_SMTP_PORT'])
-    smtp.login(os.environ['MAILGUN_SMTP_LOGIN'], os.environ['MAILGUN_SMTP_PASSWORD'])
-    smtp.sendmail(os.environ['MAILGUN_SMTP_LOGIN'], email, msg)
-    smtp.quit()
+@app.route('/validate/', methods=['GET'])
+def validate():
+    email = request.query_string
+    data = []
+    for i in Customers.objects:
+        if i.email == email:
+            return jsonify(success=False)
+    return jsonify(success=True)
 
 @app.route('/about/')
-def about(): return render_template('about.html')
+def about(): 
+    return render_template('about.html')
+
+@app.route('/checkout/')
+def checkout():
+    return render_template('checkout.html', key=stripe_keys['publishable_key'])
 
 @app.route('/')
-def index(): return render_template('home.html', key=stripe_keys['publishable_key'])
+def index(): 
+    return render_template('home.html')
 
 @app.route('/download/<email>')
 def send_pdf(email):
-    """Send your static text file."""
     for c in Customers.objects:
         if c.email == email and c.downloads > 0:
             print c.email
             print c.downloads
             c.downloads = c.downloads - 1
             c.save()
-            print "saved!"
             return app.send_static_file('lec.pdf')  	
     return render_template('nomas.html')
 
@@ -91,13 +104,11 @@ def charge():
     customer.save()
     
     #flask mail...
-    #msg = Message("Thank you for your purchase!",
-    #              sender=("Kevin Kuhn", 'postmaster@hormonalnutrition.com'),
-    #              recipients=request.form['email'])
-    #msg.html = "<h2>Thank you!</h2><p> You have 3 attempts to download your ebook.</p>" + "<p>" + url_for('send_pdf', email=request.form['email'], _external=True) + "</p>"
-    #mail.send(msg)
+    msg = Message(subject="Thank you %s for your purchase!" % request.form['email'], sender=("Hormonal Nutrition", os.environ['MAILGUN_SMTP_LOGIN']), recipients=request.form['email'])
+    msg.html = "<h2>Thank you!</h2><p> You have 3 attempts to download your ebook.</p>" + "<p>" + url_for('send_pdf', email=request.form['email'].replace('%40','@'), _external=True) + "</p>"
+    mail.send(msg)
 
-    send_email("Thanks! You have 3 attempts to download your ebook. " + url_for('send_pdf', email=request.form['email'].replace('%40','@'), _external=True), request.form['email'])
+#    send_email("Thanks! You have 3 attempts to download your ebook. " + url_for('send_pdf', email=request.form['email'].replace('%40','@'), _external=True), request.form['email'])
     return render_template('charge.html', amount=amount)
 
 @app.after_request

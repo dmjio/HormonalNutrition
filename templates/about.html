@@ -1,77 +1,42 @@
 {% extends "base.html" %}
 
 {% block css %}
-<style type="text/css">
-      body {
-        padding-top: 20px;
-        padding-bottom: 40px;
-      }
+<link rel="stylesheet" href="{{ url_for('static',filename='css/main.css') }}" type="text/css" />
+<link rel="stylesheet" href="{{ url_for('static',filename='css/impress-demo.css') }}" type="text/css" />
+<link href="http://fonts.googleapis.com/css?family=Open+Sans:regular,semibold,italic,italicsemibold|PT+Sans:400,700,400italic,700italic|PT+Serif:400,700,400italic,700italic" rel="stylesheet" />
+{% endblock %}
 
-      /* Custom container */
-      .container-narrow {
-        margin: 0 auto;
-        max-width: 700px;
-      }
-      .container-narrow > hr {
-        margin: 30px 0;
-      }
-
-      /* Main marketing message and sign up button */
-      .jumbotron {
-        margin: 60px 0;
-        text-align: center;
-      }
-      .jumbotron h1 {
-        font-size: 72px;
-        line-height: 1;
-      }
-      .jumbotron .btn {
-        font-size: 21px;
-        padding: 14px 24px;
-      }
-
-      /* Supporting marketing content */
-      .marketing {
-        margin: 60px 0;
-      }
-      .marketing p + h4 {
-        margin-top: 28px;
-      }
-      .small {
-        height : 100px;
-        width: 100px;
-      }
-    </style>
+{% block js%}
+<script src="{{ url_for('static', filename='js/impress.js') }}"></script>
+<script>impress().init();</script>
+<script>
+if ("ontouchstart" in document.documentElement) { 
+    document.querySelector(".hint").innerHTML = "<p>Tap on the left or right to navigate</p>";
+}
+</script>
 {% endblock %}
 
 {% block main %}
 
-<div class="container-narrow">
+<div id="impress">
+  <div id="start" class="step slide" data-x="-1000" data-y="-1500">
+    <p>Have your tried every diet, but cannot keep <strong>fat</strong> off
+      or maintain muscle-mass consistently? Do you want to change the way you look and feel, but
+      don’t know what to do next because everything you try
+      lets you down?</p>
+    <a href="{{ url_for('index') }}">Home</a>
+  </div>
+  <div class="step slide" data-x="0" data-y="-1500">
+    <p>What if I told you that calories are not that important?
+      In fact, what if our entire idea of dieting and calorie-restriction is
+      built on a faulty foundation and completely wrong assumption? What if traditional
+      dieting is actually unhealthy?</p>
+  </div>
+  <div class="step slide" data-x="1000" data-y="-1500">
+    <q>The assumption that a calorie of carbohydrate is equal to a calorie of protein is
+      equal to a calorie of fat is blatantly wrong.</p>
+   </div>
 
-      <div class="masthead">
-        <ul class="nav nav-pills pull-right">
-          <li ><a href="{{ url_for('index') }}">Home</a></li>
-          <li class="active"><a href="{{ url_for('about') }}">About</a></li>
-          <li><a href="http://blog.hormonalnutrition.com">Blog</a></li>
-        </ul>
-        <h3 class="muted">Hormonal Nutrition</h3>
-      </div>
-
-      <hr>
-
-      <div class="jumbotron">
-        <img src="https://dl.dropbox.com/u/10021156/HormonalNutrition/octobiwan.jpg" class="img-circle small">
-        <p class="lead">Hormonal Nutrition was developed by Kevin Kuhn</p>
-        
-      </div>
-
-      <hr>
-
-      <div class="footer">
-        <p>&copy; HormonalNutrition.com 2013</p>
-      </div>
-
-    </div> <!-- /container -->
+    </div>
  
 {% endblock %}
-
