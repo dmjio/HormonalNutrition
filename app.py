@@ -14,6 +14,8 @@ stripe_keys = {
 
 stripe.api_key = stripe_keys['secret_key']
 
+app = Flask(__name__)
+
 heroku = Heroku(app)
 
 #need to explicity define the mail gun smtp port since flask_heroku
@@ -21,11 +23,12 @@ heroku = Heroku(app)
 app.config["MAIL_PORT"] = os.environ["MAILGUN_SMTP_PORT"]
 app.config["MAIL_SERVER"] = app.config["SMTP_SERVER"]
 
-app = Flask(__name__)
 mail = Mail(app)
 
 app.config["MONGODB_USERNAME"] = app.config['MONGODB_USER'] #flask_heroku naming convention mismatch, with MongoEngine this time
 db = MongoEngine(app)
+
+
 
 
 if not 'Production' in os.environ:
