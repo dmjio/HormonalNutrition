@@ -1,7 +1,6 @@
 import os
 from flask import Flask, render_template, request, url_for, jsonify, redirect
 from flask.ext.heroku import Heroku
-from smtplib import SMTP
 from datetime import datetime
 from flask.ext.mongoengine import MongoEngine
 from flask.ext.mail import Mail, Message
@@ -94,8 +93,9 @@ def send_pdf(email):
 def charge():
     # Amount in cents
     amount = 2500
+    email = request.form['email']
     customer = stripe.Customer.create(
-        email=request.form['email'],
+        email=email,
         card=request.form['stripeToken']
     )
 
@@ -107,17 +107,18 @@ def charge():
     )
 
     #mongo goes here...
-    customer = Customers(created_at=datetime.now(),email=request.form['email'],downloads=3)
+    customer = Customers(created_at=datetime.now(),email=email,downloads=3)
     customer.save()
     
     #flask mail...
-    for i in app.config:
-        print i
-    msg = Message(subject="Thank you %s for your purchase!" % request.form['email'], sender=("Hormonal Nutrition", os.environ['MAILGUN_SMTP_LOGIN']), recipients=request.form['email'])
-    msg.html = "<h2>Thank you!</h2><p> You have 3 attempts to download your ebook.</p>" + "<p>" + url_for('send_pdf', email=request.form['email'].replace('%40','@'), _external=True) + "</p>"
+    msg = Message("Thank you %s for your purchase!" % email,
+                  sender=os.environ["MAILGUN_SMTP_LOGIN"],
+                  recipients=[email])
+
+    msg.body =  "Thank you! You have 3 attempts to download your ebook." + url_for('send_pdf', email=email.replace('%40','@'), _external=True) + "</p>"
+                                      
     mail.send(msg)
 
-#    send_email("Thanks! You have 3 attempts to download your ebook. " + url_for('send_pdf', email=request.form['email'].replace('%40','@'), _external=True), request.form['email'])
     return render_template('charge.html', amount=amount)
 
 @app.after_request
