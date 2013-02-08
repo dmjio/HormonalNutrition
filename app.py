@@ -20,16 +20,17 @@ heroku = Heroku(app)
 
 #need to explicity define the mail gun smtp port since flask_heroku
 #leaves this out
-app.config["MAIL_PORT"] = os.environ["MAILGUN_SMTP_PORT"]
-app.config["MAIL_SERVER"] = app.config["SMTP_SERVER"]
+
+app.config["MAIL_SERVER"] = os.environ["MAILGUN_SMTP_SERVER"]
+app.config['MAIL_PORT'] = os.environ["MAILGUN_SMTP_PORT"]
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USERNAME'] = os.environ["MAILGUN_SMTP_LOGIN"]
+app.config['MAIL_PASSWORD'] = os.environ["MAILGUN_SMTP_PASSWORD"]
 
 mail = Mail(app)
 
 app.config["MONGODB_USERNAME"] = app.config['MONGODB_USER'] #flask_heroku naming convention mismatch, with MongoEngine this time
 db = MongoEngine(app)
-
-
-
 
 if not 'Production' in os.environ:
     app.debug = True
@@ -110,6 +111,8 @@ def charge():
     customer.save()
     
     #flask mail...
+    for i in app.config:
+        print i
     msg = Message(subject="Thank you %s for your purchase!" % request.form['email'], sender=("Hormonal Nutrition", os.environ['MAILGUN_SMTP_LOGIN']), recipients=request.form['email'])
     msg.html = "<h2>Thank you!</h2><p> You have 3 attempts to download your ebook.</p>" + "<p>" + url_for('send_pdf', email=request.form['email'].replace('%40','@'), _external=True) + "</p>"
     mail.send(msg)
