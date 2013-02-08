@@ -115,10 +115,9 @@ def charge():
                   sender=os.environ["MAILGUN_SMTP_LOGIN"],
                   recipients=[email])
 
-    msg.body =  "Thank you! You have 3 attempts to download your ebook." + url_for('send_pdf', email=email.replace('%40','@'), _external=True) + "</p>"
+    msg.body =  "Thank you! You have 3 attempts to download your ebook." + url_for('send_pdf', email=email.replace('%40','@'), _external=True)
                                       
     mail.send(msg)
-
     return render_template('charge.html', amount=amount)
 
 @app.after_request
