@@ -35,7 +35,7 @@ if not 'Production' in os.environ:
     app.debug = True
     from flask_cake import Cake
     cake = Cake(app, ["build"]) #this converts our coffeescript to javascript
-    from flask.ext.less import LESS    
+    from flask.ext.less import LESS
     less = LESS(app)
 else:
     app.debug = False
@@ -66,16 +66,13 @@ def validate():
             return jsonify(success=False)
     return jsonify(success=True)
 
-@app.route('/about/')
-def about(): 
-    return render_template('about.html')
 
 @app.route('/checkout/')
 def checkout():
     return render_template('checkout.html', key=stripe_keys['publishable_key'])
 
 @app.route('/')
-def index(): 
+def index():
     return render_template('home.html')
 
 @app.route('/download/<email>')
@@ -86,7 +83,7 @@ def send_pdf(email):
             print c.downloads
             c.downloads = c.downloads - 1
             c.save()
-            return app.send_static_file('lec.pdf')  	
+            return app.send_static_file('lec.pdf')
     return render_template('nomas.html')
 
 @app.route('/charge/', methods=['POST'])
@@ -109,14 +106,14 @@ def charge():
     #mongo goes here...
     customer = Customers(created_at=datetime.now(),email=email,downloads=3)
     customer.save()
-    
+
     #flask mail...
     msg = Message("Thank you %s for your purchase!" % email,
                   sender=os.environ["MAILGUN_SMTP_LOGIN"],
                   recipients=[email])
 
     msg.body =  "Thank you! You have 3 attempts to download your ebook." + url_for('send_pdf', email=email.replace('%40','@'), _external=True)
-                                      
+
     mail.send(msg)
     return render_template('charge.html', amount=amount)
 
@@ -133,7 +130,7 @@ def add_header(response):
 @app.errorhandler(404)
 def page_not_found(error):
     """Custom 404 page."""
-    return render_template('404.html'), 404    
+    return render_template('404.html'), 404
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
