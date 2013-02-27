@@ -70,8 +70,20 @@ def validate():
 def checkout():
     checkout = "https://hormonalnutrition.herokuapp.com/checkout/"
     if request.headers.get('X-Forwarded-Proto', 'http') == 'https' and request.url.startswith(checkout):
-        return render_template('checkout.html', key=stripe_keys['publishable_key'])
+        return set_hsts_header(make_response(render_template('checkout.html', key=stripe_keys['publishable_key'])))
     return redirect(checkout, code=302)
+
+def set_hsts_header(response):
+    """Adds HSTS header to each response."""
+    response.headers.setdefault('Strict-Transport-Security', hsts_header)
+    return response
+
+def hsts_header():
+    """Returns the proper HSTS policy."""
+    hsts_policy = 'max-age={0}'.format(31536000) #year in seconds
+    if self.hsts_include_subdomains:
+        hsts_policy += '; includeSubDomains'
+        return hsts_policy
 
 @app.route('/')
 def index():

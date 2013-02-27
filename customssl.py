@@ -51,8 +51,3 @@ class SSLify(object):
                 code = 301
                 r = redirect(url, code=code)
                 return r
-
-    def set_hsts_header(self, response):
-        """Adds HSTS header to each response."""
-        response.headers.setdefault('Strict-Transport-Security', self.hsts_header)
-        return response
