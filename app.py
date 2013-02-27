@@ -4,7 +4,6 @@ from flask.ext.heroku import Heroku
 from datetime import datetime
 from flask.ext.mongoengine import MongoEngine
 from flask.ext.mail import Mail, Message
-from customssl import SSLify
 import stripe
 
 stripe_keys = {
@@ -15,7 +14,6 @@ stripe_keys = {
 stripe.api_key = stripe_keys['secret_key']
 
 app = Flask(__name__)
-sslify = SSLify(app)
 heroku = Heroku(app)
 
 #need to explicity define the mail gun smtp port since flask_heroku
@@ -70,6 +68,9 @@ def validate():
 
 @app.route('/checkout/')
 def checkout():
+    checkout = "https://hormonalnutrition.herokuapp.com/checkout/"
+    if request.url != checkout:
+        return redirect(checkout)
     return render_template('checkout.html', key=stripe_keys['publishable_key'])
 
 @app.route('/')
