@@ -102,7 +102,7 @@ def send_pdf(email):
             print c.downloads
             c.downloads = c.downloads - 1
             c.save()
-            return app.send_static_file('lec.pdf')
+            return app.send_static_file('HormonalNutrition.pdf')
     return render_template('nomas.html')
 
 @app.route('/charge/', methods=['POST'])
