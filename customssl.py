@@ -56,6 +56,20 @@ class SSLify(object):
                     code = 301
                 print "redirecting", url
                 r = redirect(url, code=code)
+            elif request.url.startswith('hormonalnutrition.com'):
+                url = request.url.replace('hormonalnutrition.com', 'https://hormonalnutrition.herokuapp.com', 1)
+                code = 302
+                if self.permanent:
+                    code = 301
+                print "redirecting", url
+                r = redirect(url, code=code)
+            elif request.url.startswith('hormonalnutrition.herokuapp.com'):
+                url = request.url.replace('hormonalnutrition.herokuapp.com', 'https://hormonalnutrition.herokuapp.com', 1)
+                code = 302
+                if self.permanent:
+                    code = 301
+                print "redirecting", url
+                r = redirect(url, code=code)
             if request.url.startswith('https://hormonalnutrition.com'):
                 url = request.url.replace('https://hormonalnutrition.com', 'https://hormonalnutrition.herokuapp.com', 1)
                 code = 302
