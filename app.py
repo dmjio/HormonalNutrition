@@ -68,8 +68,7 @@ def validate():
 @app.route('/checkout/')
 def checkout():
     checkout = "https://hormonalnutrition.herokuapp.com/checkout/"
-    print (request.headers.get('X-Forwarded-Proto', 'http') == 'https' and request.url.startswith(checkout))
-    if request.headers.get('X-Forwarded-Proto', 'http') == 'https' and request.url.startswith(checkout):
+    if request.headers.get('X-Forwarded-Proto', 'http') == 'https':
         return set_hsts_header(make_response(render_template('checkout.html', key=stripe_keys['publishable_key'])))
     return redirect(checkout, code=302)
 
