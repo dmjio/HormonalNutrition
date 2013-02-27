@@ -4,7 +4,6 @@ from flask.ext.heroku import Heroku
 from datetime import datetime
 from flask.ext.mongoengine import MongoEngine
 from flask.ext.mail import Mail, Message
-from customssl import SSLify
 import stripe
 
 stripe_keys = {
