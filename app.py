@@ -15,7 +15,6 @@ stripe_keys = {
 stripe.api_key = stripe_keys['secret_key']
 
 app = Flask(__name__)
-sslify = SSLify(app)
 heroku = Heroku(app)
 
 #need to explicity define the mail gun smtp port since flask_heroku
