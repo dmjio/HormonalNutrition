@@ -74,6 +74,7 @@ def checkout():
 
 @app.route('/')
 def index():
+    print "testing: ", request.url
     return render_template('home.html')
 
 @app.route('/download/<email>')
