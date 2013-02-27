@@ -72,7 +72,7 @@ def checkout():
         print '1'
         resp = make_response(render_template('checkout.html', key=stripe_keys['publishable_key']))
         print 2
-        return set_hsts_header(response)
+        return set_hsts_header(resp)
     return redirect(checkout, code=302)
 
 def set_hsts_header(response):
