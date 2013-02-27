@@ -70,6 +70,7 @@ def checkout():
     print "checkout:", request.url
     checkout = "https://hormonalnutrition.herokuapp.com/checkout/"
     if not checkout in request.url:
+        print checkout, request.url
         return redirect(checkout)
     return render_template('checkout.html', key=stripe_keys['publishable_key'])
 
