@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from flask import request, redirect
 
 YEAR_IN_SECS = 31536000
@@ -38,60 +40,17 @@ class SSLify(object):
         criteria = [
             request.is_secure,
             self.app.debug,
-            request.headers.get('X-Forwarded-Proto', 'http') == 'https'
+            request.headers.get('X-Forwarded-Proto', 'http') == 'https',
+            not "checkout" in request.url
         ]
 
-        if not any(criteria):
-            if request.url.startswith('http://www.hormonalnutrition.com'):
-                url = request.url.replace('http://www.hormonalnutrition.com', 'https://hormonalnutrition.herokuapp.com', 1)
-                code = 302
-                if self.permanent:
-                    code = 301
-                print "redirecting", 1, url
+        if "checkout" in request.url:
+            url = "https://herokuapp.hormonalnutrition.com"
+            code = 302
+            if self.permanent:
+                code = 301
                 r = redirect(url, code=code)
-            elif request.url.startswith('https://www.hormonalnutrition.com'):
-                url = request.url.replace('https://www.hormonalnutrition.com', 'https://hormonalnutrition.herokuapp.com', 1)
-                code = 302
-                if self.permanent:
-                    code = 301
-                print "redirecting",2, url
-                r = redirect(url, code=code)
-            elif request.url.startswith('hormonalnutrition.com'):
-                url = request.url.replace('hormonalnutrition.com', 'https://hormonalnutrition.herokuapp.com', 1)
-                code = 302
-                if self.permanent:
-                    code = 301
-                print "redirecting", 3, url
-                r = redirect(url, code=code)
-            elif request.url.startswith('hormonalnutrition.herokuapp.com'):
-                url = request.url.replace('hormonalnutrition.herokuapp.com', 'https://hormonalnutrition.herokuapp.com', 1)
-                code = 302
-                if self.permanent:
-                    code = 301
-                print "redirecting", 4, url
-                r = redirect(url, code=code)
-            elif request.url.startswith('https://hormonalnutrition.com'):
-                url = request.url.replace('https://hormonalnutrition.com', 'https://hormonalnutrition.herokuapp.com', 1)
-                code = 302
-                if self.permanent:
-                    code = 301
-                print "redirecting", 5, url
-                r = redirect(url, code=code)
-            elif request.url.startswith('http://hormonalnutrition.com'):
-                url = request.url.replace('http://hormonalnutrition.com', 'https://hormonalnutrition.herokuapp.com', 1)
-                code = 302
-                if self.permanent:
-                    code = 301
-                print "redirecting", 6, url
-                r = redirect(url, code=code)
-            elif request.url.startswith('www.hormonalnutrition.com'):
-                url = request.url.replace('www.hormonalnutrition.com', 'https://hormonalnutrition.herokuapp.com', 1)
-                code = 302
-                if self.permanent:
-                    code = 301
-                print "redirecting", 7, url
-                r = redirect(url, code=code)
-            return r
+                return r
 
     def set_hsts_header(self, response):
         """Adds HSTS header to each response."""
