@@ -4,7 +4,7 @@ from flask.ext.heroku import Heroku
 from datetime import datetime
 from flask.ext.mongoengine import MongoEngine
 from flask.ext.mail import Mail, Message
-from flask_sslify import SSLify
+from customssl import SSLify
 import stripe
 
 stripe_keys = {
@@ -74,7 +74,6 @@ def checkout():
 
 @app.route('/')
 def index():
-    print request.url, ": URL"
     return render_template('home.html')
 
 @app.route('/download/<email>')

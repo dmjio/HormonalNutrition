@@ -42,14 +42,19 @@ class SSLify(object):
         ]
 
         if not any(criteria):
-            if request.url.startswith('http://'):
-                url = request.url.replace('http://', 'https://', 1)
+            if request.url.startswith('http://www.hormonalnutrition.c'):
+                url = request.url.replace('http://www.hormonalnutrition.com', 'https://hormonalnutrition.herokuapp.com', 1)
                 code = 302
                 if self.permanent:
                     code = 301
                 r = redirect(url, code=code)
-
-                return r
+            elif request.url.startswith('http://hormonalnutrition.c'):
+                url = request.url.replace('http://hormonalnutrition.com', 'https://hormonalnutrition.herokuapp.com', 1)
+                code = 302
+                if self.permanent:
+                    code = 301
+                r = redirect(url, code=code)
+            return r
 
     def set_hsts_header(self, response):
         """Adds HSTS header to each response."""
