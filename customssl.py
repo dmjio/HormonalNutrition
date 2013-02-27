@@ -47,49 +47,49 @@ class SSLify(object):
                 code = 302
                 if self.permanent:
                     code = 301
-                print "redirecting", url
+                print "redirecting", 1, url
                 r = redirect(url, code=code)
             elif request.url.startswith('https://www.hormonalnutrition.com'):
                 url = request.url.replace('https://www.hormonalnutrition.com', 'https://hormonalnutrition.herokuapp.com', 1)
                 code = 302
                 if self.permanent:
                     code = 301
-                print "redirecting", url
+                print "redirecting",2, url
                 r = redirect(url, code=code)
             elif request.url.startswith('hormonalnutrition.com'):
                 url = request.url.replace('hormonalnutrition.com', 'https://hormonalnutrition.herokuapp.com', 1)
                 code = 302
                 if self.permanent:
                     code = 301
-                print "redirecting", url
+                print "redirecting", 3, url
                 r = redirect(url, code=code)
             elif request.url.startswith('hormonalnutrition.herokuapp.com'):
                 url = request.url.replace('hormonalnutrition.herokuapp.com', 'https://hormonalnutrition.herokuapp.com', 1)
                 code = 302
                 if self.permanent:
                     code = 301
-                print "redirecting", url
+                print "redirecting", 4, url
                 r = redirect(url, code=code)
             elif request.url.startswith('https://hormonalnutrition.com'):
                 url = request.url.replace('https://hormonalnutrition.com', 'https://hormonalnutrition.herokuapp.com', 1)
                 code = 302
                 if self.permanent:
                     code = 301
-                print "redirecting", url
+                print "redirecting", 5, url
                 r = redirect(url, code=code)
             elif request.url.startswith('http://hormonalnutrition.com'):
                 url = request.url.replace('http://hormonalnutrition.com', 'https://hormonalnutrition.herokuapp.com', 1)
                 code = 302
                 if self.permanent:
                     code = 301
-                print "redirecting", url
+                print "redirecting", 6, url
                 r = redirect(url, code=code)
             elif request.url.startswith('www.hormonalnutrition.com'):
                 url = request.url.replace('www.hormonalnutrition.com', 'https://hormonalnutrition.herokuapp.com', 1)
                 code = 302
                 if self.permanent:
                     code = 301
-                print "redirecting", url
+                print "redirecting", 7, url
                 r = redirect(url, code=code)
             return r
 
