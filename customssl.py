@@ -47,12 +47,14 @@ class SSLify(object):
                 code = 302
                 if self.permanent:
                     code = 301
+                print "redirecting", url
                 r = redirect(url, code=code)
             elif request.url.startswith('http://hormonalnutrition.c'):
                 url = request.url.replace('http://hormonalnutrition.com', 'https://hormonalnutrition.herokuapp.com', 1)
                 code = 302
                 if self.permanent:
                     code = 301
+                print "redirecting", url
                 r = redirect(url, code=code)
             return r
 
