@@ -131,7 +131,7 @@ def charge():
                   sender=os.environ["MAILGUN_SMTP_LOGIN"],
                   recipients=[email])
 
-    msg.body =  "Thank you! You have 3 attempts to download your ebook. " + url_for('send_pdf', email=email.replace('%40','@') + " Please note: This ebook is over 1MB in size. It might take up to 30 seconds to download. Please do not refresh your browser during this time", _external=True)
+    msg.body =  "Thank you! You have 3 attempts to download your ebook. " + url_for('send_pdf', email=email.replace('%40','@'), _external=True) +  " Please note: This ebook is over 1MB in size. It might take up to 30 seconds to download. Please do not refresh your browser during this time"
 
     mail.send(msg)
     return render_template('charge.html', amount=amount)
