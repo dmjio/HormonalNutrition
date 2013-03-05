@@ -67,6 +67,8 @@ def validate():
 
 @app.route('/checkout/')
 def checkout():
+    if not 'Production' in os.environ:
+        return render_template('checkout.html')
     checkout = "https://hormonalnutrition.herokuapp.com/checkout/"
     if request.headers.get('X-Forwarded-Proto', 'http') == 'https':
         print '1'
@@ -91,8 +93,11 @@ def hsts_header():
 
 @app.route('/')
 def index():
-    print "testing: ", request.url
     return render_template('home.html')
+
+@app.route('/about/')
+def about():
+    return render_template('about.html')
 
 @app.route('/download/<email>')
 def send_pdf(email):
@@ -143,7 +148,7 @@ def add_header(response):
     and also to cache the rendered page for 10 minutes.
     """
     response.headers['X-UA-Compatible'] = 'IE=Edge,chrome=1'
-    response.headers['Cache-Control'] = 'public, max-age=0'
+    response.headers['Cache-Control'] = 'public, max-age=600'
     return response
 
 @app.errorhandler(404)

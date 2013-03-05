@@ -3,7 +3,10 @@
 {% block css %}
 <link href="http://fonts.googleapis.com/css?family=Open+Sans:regular,semibold,italic,italicsemibold|PT+Sans:400,700,400italic,700italic|PT+Serif:400,700,400italic,700italic" rel="stylesheet" />
 <style type="text/css" media="screen">
-
+<!-- body { -->
+<!--    background-image:url('https://dl.dropbox.com/u/10021156/HormonalNutrition/pw_maze_white.png'); -->
+<!--    background-repeat:repeat; -->
+<!-- } -->
 </style>
 {% endblock %}
 
@@ -13,6 +16,7 @@
         <ul class="nav nav-pills">
           <li class="active"><a href="{{ url_for('index') }}">Home</a></li>
           <li ><a href="{{ url_for('checkout') }}">Checkout</a></li>
+          <li ><a href="{{ url_for('about') }}">About</a></li>
         </ul>
       <hr>
 <div class="row-fluid">

@@ -2,41 +2,28 @@
 
 {% block css %}
 <link rel="stylesheet" href="{{ url_for('static',filename='css/main.css') }}" type="text/css" />
-<link rel="stylesheet" href="{{ url_for('static',filename='css/impress-demo.css') }}" type="text/css" />
 <link href="http://fonts.googleapis.com/css?family=Open+Sans:regular,semibold,italic,italicsemibold|PT+Sans:400,700,400italic,700italic|PT+Serif:400,700,400italic,700italic" rel="stylesheet" />
 {% endblock %}
 
-{% block js%}
-<script src="{{ url_for('static', filename='js/impress.js') }}"></script>
-<script>impress().init();</script>
-<script>
-if ("ontouchstart" in document.documentElement) { 
-    document.querySelector(".hint").innerHTML = "<p>Tap on the left or right to navigate</p>";
-}
-</script>
-{% endblock %}
-
 {% block main %}
+<div class="container ">
+  <h1 class="pull-right">Hormonal Nutrition</h1>
+        <ul class="nav nav-pills">
+          <li><a href="{{ url_for('index') }}">Home</a></li>
+          <li><a href="{{ url_for('checkout') }}">Checkout</a></li>
+          <li class="active" ><a href="{{ url_for('about') }}">About</a></li>
+        </ul>
+      <hr>
+</div>
+<div class="row-fluid">
+<div class="span12" style="text-align:center;">
+  <iframe src="http://prezi.com/embed/jsm_-z4lttvc/?bgcolor=ffffff&amp;lock_to_path=1&amp;autoplay=no&amp;autohide_ctrls=0&amp;features=undefined&amp;disabled_features=undefined"
+  width="550" height="400" frameBorder="0"></iframe>
 
-<div id="impress">
-  <div id="start" class="step slide" data-x="-1000" data-y="-1500">
-    <p>Have your tried every diet, but cannot keep <strong>fat</strong> off
-      or maintain muscle-mass consistently? Do you want to change the way you look and feel, but
-      don’t know what to do next because everything you try
-      lets you down?</p>
-    <a href="{{ url_for('index') }}">Home</a>
-  </div>
-  <div class="step slide" data-x="0" data-y="-1500">
-    <p>What if I told you that calories are not that important?
-      In fact, what if our entire idea of dieting and calorie-restriction is
-      built on a faulty foundation and completely wrong assumption? What if traditional
-      dieting is actually unhealthy?</p>
-  </div>
-  <div class="step slide" data-x="1000" data-y="-1500">
-    <q>The assumption that a calorie of carbohydrate is equal to a calorie of protein is
-      equal to a calorie of fat is blatantly wrong.</p>
-   </div>
-
-    </div>
+      <div class="footer">
+        <p>&copy; HormonalNutrition.com 2013</p>
+      </div>
+</div>
+    </div> <!-- /container -->
  
 {% endblock %}
